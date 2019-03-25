@@ -23,7 +23,9 @@ public class MybatisTests {
 
     static {
         try {
+            // 通过 Resources 工具类获取配置文件输入流
             InputStream inputStream = Resources.getResourceAsStream("com/renguangli/mybatis-config.xml");
+            // SqlSessionFactoryBuilder 通过配置文件输入流构建 SqlSessionFactory，本质上是通过 Configuration 构建 SqlSessionFactory
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
