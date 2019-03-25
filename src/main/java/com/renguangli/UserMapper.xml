@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.renguangli.UserMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
+        insert into user(username, password)
+        values (#{user.username}, #{user.password})
+    </insert>
+    <delete id="delete">
+        delete
+        from user
+        where user_id = #{userId}
+    </delete>
+    <update id="update">
+        update user set password = #{password} where username = #{username}
+    </update>
+    <select id="get" resultType="com.renguangli.User">
+
+    </select>
+    <select id="getAll" resultType="com.renguangli.User">
+
+    </select>
+</mapper>
