@@ -15,19 +15,21 @@
  */
 package org.apache.ibatis.binding;
 
+import org.apache.ibatis.session.SqlSession;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.ibatis.session.SqlSession;
 
 /**
  * @author Lasse Voss
  */
 public class MapperProxyFactory<T> {
 
+  // Mapper Class 对象
   private final Class<T> mapperInterface;
+  // 每个 Mapper 有多个方法，使用 methodCache 缓存 MapperMethod
   private final Map<Method, MapperMethod> methodCache = new ConcurrentHashMap<Method, MapperMethod>();
 
   public MapperProxyFactory(Class<T> mapperInterface) {
@@ -44,10 +46,12 @@ public class MapperProxyFactory<T> {
 
   @SuppressWarnings("unchecked")
   protected T newInstance(MapperProxy<T> mapperProxy) {
+    // 通过 JDK 动态代理生成 Mapper 代理对象
     return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[] { mapperInterface }, mapperProxy);
   }
 
   public T newInstance(SqlSession sqlSession) {
+    // 实例化 mapperProxy 对象
     final MapperProxy<T> mapperProxy = new MapperProxy<T>(sqlSession, mapperInterface, methodCache);
     return newInstance(mapperProxy);
   }
